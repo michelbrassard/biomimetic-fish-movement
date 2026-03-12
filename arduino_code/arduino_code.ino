@@ -34,21 +34,13 @@ void setup() {
 }
 
 void loop() {
-  while (Serial.available() > 0) {
-    int number = Serial.parseInt();
 
-    Serial.print("Entered: ");
-    Serial.println(number);
+  float t = millis() / 1000.0;
+  float sineValue = 0.5 * sin(t * 3.0);
+  int angle = 90 + (90 * sineValue);
+  
+  servo1.write(angle);
 
-    if (number == 0 || number > 180) {
-      return;
-    }
-
-    servo1.write(number);
-    servo2.write(number);
-    servo3.write(number);
-    servo4.write(number);
-    servo5.write(number);
-  }
+  delay(15);
 }
 
