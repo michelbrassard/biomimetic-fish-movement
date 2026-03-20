@@ -12,8 +12,7 @@ Servo servo3;
 Servo servo4;
 Servo servo5;
 
-float f = 4.0;
-
+float f = 5.0;
 
 void setup() {
   Serial.begin(9600);
@@ -48,12 +47,29 @@ void loop() {
   float sine1 = 0.35 * sin(t * f);
   int angle1 = (90 * sine1);
   
-  
   servo3.write(90 + angle3); //head
   servo2.write(90 - angle2);
   servo1.write(90 + angle1);
 
-  delay(5);
+  if (Serial.available() > 0) {
+
+    // Multiple characters can be added, writing "wwwww" will give +5, repeating the code for each character
+    // Negativan f obrne smjer kretanja vala
+    int choice = Serial.read();
+    switch (choice) {
+      // Character "w"
+      case 119:
+        f = f + 1.0;
+        break;
+      // Character "s"
+      case 115:
+        f = f - 1.0;
+        break;
+    }
+
+    Serial.print("Frequency: ");
+    Serial.println(f);
+  }
 }
 
 
